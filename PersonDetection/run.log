@@ -1,0 +1,22 @@
+Connecting to simulator through tcp.
+
+Syncing 0
+Syncing 1
+Syncing 2
+Connected to robot.
+Name: MobileSim
+Type: Pioneer
+Subtype: peoplebot-sh
+Loaded robot parameters from peoplebot-sh.p
+ArLaserConnector: Auto parsing args for lasers
+Using new style simulated laser for lms2xx_1
+sim_lms2xx_1: Connected to simulated laser.
+Laser conectado
+
+Añadido manejador teclado
+
+Posicion actual robot:
+
+0 0 0.0
+Aria: Received signal 'SIGTERM'. Exiting.
+Disconnecting from robot.

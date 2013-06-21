@@ -1,0 +1,11 @@
+Este proyecto integra la navegación Reactiva implementada en la librería MRPT
+con el trabajo realziado anteriormente de control del robot y láser con liberias
+propias de MobileRobots.
+
+Realiza una detección de piernas basada en conjuntos y características geométricas
+de ellos. Basado en el artículo "The detection and following of human legs through 
+inductives approaches for a Mobile Robot with a single laser range finder", 
+Woojin Chung, Hoyeon Kim y otros, IEE transactions industrial electronics (2012).
+
+Está pensado para guardar datos del láser y poder contruir posteriormente una SVM 
+para la clasificación de las piernas.

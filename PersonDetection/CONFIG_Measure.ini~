@@ -1,0 +1,3 @@
+[MEASURE_CONFIG]
+SAVE_MEASURE_MAX_DISTANCE=2	;max points distance in meters to be considered while saving measures to file 
+LASER_MAX_DISTANCE=10		;max device range in meter
