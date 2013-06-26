@@ -8,10 +8,11 @@
 #ifndef DETECTOR_H_
 #define DETECTOR_H_
 
-
+//#include <math.h>
 #include <stdio.h>
 #include <vector>
 #include <mrpt/poses/CPose2D.h>
+#include <mrpt/gui/CDisplayWindowPlots.h>
 #include <mrpt/utils/CConfigFile.h>
 #include <mrpt/system/filesystem.h>
 #include <Eigen/StdVector>
@@ -20,9 +21,9 @@
 
 using namespace std;
 using namespace mrpt::poses;
+using namespace mrpt::gui;
 
 EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(CPose2D);
-
 
 class Cluster {
 public:
@@ -52,6 +53,7 @@ EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Cluster);
 
 
 
+
 class Detector {
 public:
 	Detector();
@@ -61,16 +63,30 @@ public:
 	vector<CPose2D>* getPuntos();
 	void abrirFichero(char* filename,bool filtrar_distancia);
 	vector<Cluster> clusterizar(float umbral,int min_puntos);
+	vector<CPose2D> buscarPersonas(vector<Cluster> piernas);
 
 	void printClusters(vector<Cluster> piernas);
 	void filtrarDatos();
 
+	//Function
+	Eigen::MatrixXf eliminarRectas(int Np,int Ntheta);
+	void filtrarPuntosEnRecta(TLine2D recta,double distancia);
+
 
 private:
+	// Fields
 	double max_dist;
 	vector<double> distancias;
 	vector<double> angulos;
 	vector<CPose2D> puntos;
+
+
+};
+
+class Grafico{
+public:
+	static void dibujarLinea(CDisplayWindowPlots *plot, double p, double theta,vector<double> limites);
+
 };
 
 #endif /* DETECTOR_H_ */
