@@ -207,10 +207,37 @@ src/Detector.d: ../src/Detector.cpp ../include/Detector.h \
  /usr/include/mrpt/base/include/mrpt/math/utils.h \
  /usr/include/mrpt/base/include/mrpt/math/ops_vectors.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPoseOrPoint_detail.h \
- /usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h \
+ /usr/include/mrpt/base/include/mrpt/synch.h \
+ /usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CEvent.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h \
+ /usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CObservable.h \
+ /usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/keycodes.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CImage.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CCanvas.h \
+ /usr/include/mrpt/base/include/mrpt/utils/TColor.h \
+ /usr/include/mrpt/base/include/mrpt/utils/TCamera.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h \
  /usr/include/mrpt/base/include/mrpt/utils/CConfigFileBase.h \
  /usr/include/mrpt/base/include/mrpt/utils/TEnumType.h \
  /usr/include/mrpt/base/include/mrpt/system/string_utils.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CStringList.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h \
+ /usr/include/mrpt/base/include/mrpt/math/CQuaternion.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPoint.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPose3D.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h \
  /usr/include/mrpt/base/include/mrpt/system/filesystem.h
 
 ../include/Detector.h:
@@ -631,12 +658,66 @@ src/Detector.d: ../src/Detector.cpp ../include/Detector.h \
 
 /usr/include/mrpt/base/include/mrpt/poses/CPoseOrPoint_detail.h:
 
-/usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h:
+/usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h:
+
+/usr/include/mrpt/base/include/mrpt/synch.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CEvent.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CObservable.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/keycodes.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CImage.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CCanvas.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/TColor.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/TCamera.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/CConfigFileBase.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/TEnumType.h:
 
 /usr/include/mrpt/base/include/mrpt/system/string_utils.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CStringList.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h:
+
+/usr/include/mrpt/base/include/mrpt/math/CQuaternion.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPoint.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPose3D.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h:
 
 /usr/include/mrpt/base/include/mrpt/system/filesystem.h:

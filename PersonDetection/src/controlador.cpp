@@ -152,6 +152,7 @@ void* Controlador::runThread(void*)
 {
     double angle;
     clock_t inicio,fin;
+    CTicTac temporizador;
     // Run until the thread is requested to end by another thread.
     while(getRunning())
     {
@@ -300,13 +301,35 @@ void* Controlador::runThread(void*)
 
             case Controlador::GUARDARMEDIDAS:
             {
+            	temporizador.Tic();
+            	// Medimos con el laser estableciendo distancia maxima
             	measure(false);
             	vector<double> dfiltrada;
             	vector<CPose2D> puntos;
             	filtrarMedidas(&dfiltrada,&puntos);
+
+            	// Preparamos el detector para clusterizar
             	detector.setDistancias(dfiltrada);
             	detector.setPuntos(puntos);
-            	vector<Cluster> piernas=detector.clusterizar(0.10,3);
+
+            	// Eliminamos lineas para facilitar la deteccion
+            	Eigen::MatrixXf rectas=detector.eliminarRectas(30,181);
+
+            	double limits[] = {0,2,-2,2};
+            	vector<double> limites (limits, limits + 4);
+
+            	cout << "Rectas detectadas: " << rectas.rows() << endl;
+
+            	// Dibujamos rectas detectadas
+            	for(int j=0;j < rectas.rows();j++){
+
+            		Grafico::dibujarLinea(&winPlot,rectas(j,0),rectas(j,1),limites);
+
+            	}
+
+            	// Clusterizar
+            	vector<Cluster> conjuntos=detector.clusterizar(0.10,3);
+            	vector<Cluster> piernas;
             	vector<CPose2D> *p;
             	vector<double> x,y;
             	double target;
@@ -321,9 +344,9 @@ void* Controlador::runThread(void*)
 
 
 
-            	for(int i=0;i < piernas.size();i++){
-            		p=piernas[i].getPuntos();
-            		for(int j=0;j < piernas[i].getNumPuntos();j++){
+            	for(int i=0;i < conjuntos.size();i++){
+            		p=conjuntos[i].getPuntos();
+            		for(int j=0;j < conjuntos[i].getNumPuntos();j++){
             			x.push_back(p->at(j).x());
             			y.push_back(p->at(j).y());
             		}
@@ -336,24 +359,36 @@ void* Controlador::runThread(void*)
             		instancia[2].index=3;
             		instancia[3].index=-1;
 
-            		instancia[0].value=piernas[i].getContorno();
-            		instancia[1].value=piernas[i].getAncho();
-            		instancia[2].value=piernas[i].getProfundidad();
+            		instancia[0].value=conjuntos[i].getContorno();
+            		instancia[1].value=conjuntos[i].getAncho();
+            		instancia[2].value=conjuntos[i].getProfundidad();
 
 
             		target=svm_predict(model,instancia);
 
             		if(target==1){
             			// El clasificador SVM lo reconoce como pierna
+            			piernas.push_back(conjuntos[i]);
             			piernasPlot.plot(x,y,formato[i%3]);
             		}
             		x.clear();
             		y.clear();
-
-
             	}
 
+            	vector<CPose2D> personas=detector.buscarPersonas(piernas);
+            	cout << "Personas detectadas: " << personas.size() << endl;
+
+            	cout << "Piernas detectadas: " << piernas.size() << endl;
             	detector.printClusters(piernas);
+            	x.clear();
+            	y.clear();
+            	for(int k=0;k < personas.size(); k++){
+            		x.push_back(personas[k].x());
+            		y.push_back(personas[k].y());
+            	}
+            	piernasPlot.plot(x,y,".c4");
+
+            	cout << "tiempo rutin (ms): " << temporizador.Tac()*1000 << endl;
 
 
             	ejecutar=false;
@@ -462,6 +497,12 @@ void Controlador::setDataIndex(int d){
 	data_index=d;
 }
 
+/**
+ * Cambia coordenadas a metros, si la distancia de un punto es mayor que
+ * max_save_dist establece esta como distancia y representa los puntos
+ *
+ *
+ */
 
 void Controlador::filtrarMedidas(vector<double> *dfiltrada, vector<CPose2D> *puntos){
 
@@ -499,10 +540,8 @@ void Controlador::filtrarMedidas(vector<double> *dfiltrada, vector<CPose2D> *pun
 
 		}
 
-
 		winPlot.clear();
 		winPlot.plot(x,y,".b2");
-
 
 }
 

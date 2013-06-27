@@ -284,7 +284,6 @@ Eigen::MatrixXf Detector::eliminarRectas(int Np, int Ntheta){
 		} // Fin for j
 	}//Fin for i
 
-	cout << scores << endl;
 
 	for(int i=0;i < scores.rows();i++){
 		for(int j=0;j < scores.cols();j++){

@@ -28,6 +28,7 @@
 #include <mrpt/utils/CConfigFile.h>
 #include <mrpt/system/filesystem.h>
 #include <mrpt/system/threads.h>
+#include <mrpt/utils/CTicTac.h>
 
 
 #define TIME_TO_GO 20

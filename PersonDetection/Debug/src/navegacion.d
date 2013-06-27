@@ -208,10 +208,37 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/base/include/mrpt/math/utils.h \
  /usr/include/mrpt/base/include/mrpt/math/ops_vectors.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPoseOrPoint_detail.h \
- /usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h \
+ /usr/include/mrpt/base/include/mrpt/synch.h \
+ /usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CEvent.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h \
+ /usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
+ /usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CObservable.h \
+ /usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/keycodes.h \
+ /usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CImage.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CCanvas.h \
+ /usr/include/mrpt/base/include/mrpt/utils/TColor.h \
+ /usr/include/mrpt/base/include/mrpt/utils/TCamera.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h \
  /usr/include/mrpt/base/include/mrpt/utils/CConfigFileBase.h \
  /usr/include/mrpt/base/include/mrpt/utils/TEnumType.h \
  /usr/include/mrpt/base/include/mrpt/system/string_utils.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CStringList.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h \
+ /usr/include/mrpt/base/include/mrpt/math/CQuaternion.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPoint.h \
+ /usr/include/mrpt/base/include/mrpt/poses/CPose3D.h \
+ /usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h \
  /usr/include/mrpt/base/include/mrpt/system/filesystem.h \
  ../include/MyReactiveInterface.h /usr/local/Aria/include/Aria.h \
  /usr/local/Aria/include/ariaOSDef.h \
@@ -407,11 +434,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/reactivenav/include/mrpt/reactivenav/CAbstractReactiveNavigationSystem.h \
  /usr/include/mrpt/maps/include/mrpt/maps.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CBeacon.h \
- /usr/include/mrpt/base/include/mrpt/utils/CStringList.h \
- /usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h \
- /usr/include/mrpt/base/include/mrpt/poses/CPoint.h \
- /usr/include/mrpt/base/include/mrpt/poses/CPose3D.h \
- /usr/include/mrpt/base/include/mrpt/math/CQuaternion.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPointPDFParticles.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPointPDF.h \
  /usr/include/mrpt/base/include/mrpt/utils/CProbabilityDensityFunction.h \
@@ -422,15 +444,11 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPointPDFSOG.h \
  /usr/include/mrpt/opengl/include/mrpt/opengl/CSetOfObjects.h \
  /usr/include/mrpt/opengl/include/mrpt/opengl/CRenderizable.h \
- /usr/include/mrpt/base/include/mrpt/utils/TColor.h \
- /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
- /usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h \
  /usr/include/mrpt/opengl/include/mrpt/opengl/opengl_fonts.h \
  /usr/include/mrpt/opengl/include/mrpt/opengl/link_pragmas.h \
  /usr/include/mrpt/opengl/include/mrpt/opengl/gl_utils.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPose3DPDF.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPose3DQuatPDF.h \
- /usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h \
  /usr/include/mrpt/maps/include/mrpt/maps/link_pragmas.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CBeaconMap.h \
  /usr/include/mrpt/obs/include/mrpt/slam/CMetricMap.h \
@@ -438,11 +456,8 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/obs/include/mrpt/obs/link_pragmas.h \
  /usr/include/mrpt/base/include/mrpt/utils/TMatchingPair.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPoint2D.h \
- /usr/include/mrpt/base/include/mrpt/utils/CObservable.h \
- /usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h \
  /usr/include/mrpt/obs/include/mrpt/slam/CMetricMapEvents.h \
  /usr/include/mrpt/base/include/mrpt/utils/CDynamicGrid.h \
- /usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CColouredPointsMap.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CPointsMap.h \
  /usr/include/mrpt/base/include/mrpt/math/KDTreeCapable.h \
@@ -452,10 +467,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/base/include/mrpt/math/CPolygon.h \
  /usr/include/mrpt/base/include/mrpt/utils/PLY_import_export.h \
  /usr/include/mrpt/obs/include/mrpt/slam/CObservationImage.h \
- /usr/include/mrpt/base/include/mrpt/utils/CImage.h \
- /usr/include/mrpt/base/include/mrpt/utils/CCanvas.h \
- /usr/include/mrpt/base/include/mrpt/utils/TCamera.h \
- /usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CGasConcentrationGridMap2D.h \
  /usr/include/mrpt/maps/include/mrpt/slam/CRandomFieldGridMap2D.h \
  /usr/include/mrpt/obs/include/mrpt/slam/CObservationGasSensors.h \
@@ -500,17 +511,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
  /usr/include/mrpt/base/include/mrpt/poses/CPose3DPDFGaussianInf.h \
  /usr/include/mrpt/base/include/mrpt/poses/SE_traits.h \
  /usr/include/mrpt/reactivenav/include/mrpt/reactivenav/link_pragmas.h \
- /usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h \
- /usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h \
- /usr/include/mrpt/base/include/mrpt/synch.h \
- /usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h \
- /usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h \
- /usr/include/mrpt/base/include/mrpt/synch/CEvent.h \
- /usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h \
- /usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h \
- /usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h \
- /usr/include/mrpt/gui/include/mrpt/gui/keycodes.h \
- /usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h \
  /usr/include/mrpt/base/include/mrpt/utils/CObserver.h ../include/svm.h \
  /usr/local/Arnl/include/ArLocalizationTask.h \
  /usr/local/Arnl/include/ArRobotPoseProb.h \
@@ -1000,13 +1000,67 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 
 /usr/include/mrpt/base/include/mrpt/poses/CPoseOrPoint_detail.h:
 
-/usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h:
+/usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h:
+
+/usr/include/mrpt/base/include/mrpt/synch.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CEvent.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
+
+/usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CObservable.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/keycodes.h:
+
+/usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CImage.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CCanvas.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/TColor.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/TCamera.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/CConfigFileBase.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/TEnumType.h:
 
 /usr/include/mrpt/base/include/mrpt/system/string_utils.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CStringList.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h:
+
+/usr/include/mrpt/base/include/mrpt/math/CQuaternion.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPoint.h:
+
+/usr/include/mrpt/base/include/mrpt/poses/CPose3D.h:
+
+/usr/include/mrpt/base/include/mrpt/utils/CConfigFile.h:
 
 /usr/include/mrpt/base/include/mrpt/system/filesystem.h:
 
@@ -1442,16 +1496,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 
 /usr/include/mrpt/maps/include/mrpt/slam/CBeacon.h:
 
-/usr/include/mrpt/base/include/mrpt/utils/CStringList.h:
-
-/usr/include/mrpt/base/include/mrpt/poses/CPoint3D.h:
-
-/usr/include/mrpt/base/include/mrpt/poses/CPoint.h:
-
-/usr/include/mrpt/base/include/mrpt/poses/CPose3D.h:
-
-/usr/include/mrpt/base/include/mrpt/math/CQuaternion.h:
-
 /usr/include/mrpt/base/include/mrpt/poses/CPointPDFParticles.h:
 
 /usr/include/mrpt/base/include/mrpt/poses/CPointPDF.h:
@@ -1472,12 +1516,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 
 /usr/include/mrpt/opengl/include/mrpt/opengl/CRenderizable.h:
 
-/usr/include/mrpt/base/include/mrpt/utils/TColor.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/CReferencedMemBlock.h:
-
 /usr/include/mrpt/opengl/include/mrpt/opengl/opengl_fonts.h:
 
 /usr/include/mrpt/opengl/include/mrpt/opengl/link_pragmas.h:
@@ -1487,8 +1525,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 /usr/include/mrpt/base/include/mrpt/poses/CPose3DPDF.h:
 
 /usr/include/mrpt/base/include/mrpt/poses/CPose3DQuatPDF.h:
-
-/usr/include/mrpt/base/include/mrpt/poses/CPose3DQuat.h:
 
 /usr/include/mrpt/maps/include/mrpt/maps/link_pragmas.h:
 
@@ -1504,15 +1540,9 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 
 /usr/include/mrpt/base/include/mrpt/poses/CPoint2D.h:
 
-/usr/include/mrpt/base/include/mrpt/utils/CObservable.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/mrptEvent.h:
-
 /usr/include/mrpt/obs/include/mrpt/slam/CMetricMapEvents.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/CDynamicGrid.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/CLoadableOptions.h:
 
 /usr/include/mrpt/maps/include/mrpt/slam/CColouredPointsMap.h:
 
@@ -1531,14 +1561,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 /usr/include/mrpt/base/include/mrpt/utils/PLY_import_export.h:
 
 /usr/include/mrpt/obs/include/mrpt/slam/CObservationImage.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/CImage.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/CCanvas.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/TCamera.h:
-
-/usr/include/mrpt/base/include/mrpt/utils/CConfigFileMemory.h:
 
 /usr/include/mrpt/maps/include/mrpt/slam/CGasConcentrationGridMap2D.h:
 
@@ -1627,28 +1649,6 @@ src/navegacion.d: ../src/navegacion.cpp ../include/controlador.h \
 /usr/include/mrpt/base/include/mrpt/poses/SE_traits.h:
 
 /usr/include/mrpt/reactivenav/include/mrpt/reactivenav/link_pragmas.h:
-
-/usr/include/mrpt/gui/include/mrpt/gui/CDisplayWindowPlots.h:
-
-/usr/include/mrpt/gui/include/mrpt/gui/CBaseGUIWindow.h:
-
-/usr/include/mrpt/base/include/mrpt/synch.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/atomic_incr.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/CCriticalSection.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/CEvent.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/CSemaphore.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/MT_buffer.h:
-
-/usr/include/mrpt/base/include/mrpt/synch/CThreadSafeVariable.h:
-
-/usr/include/mrpt/gui/include/mrpt/gui/keycodes.h:
-
-/usr/include/mrpt/gui/include/mrpt/gui/link_pragmas.h:
 
 /usr/include/mrpt/base/include/mrpt/utils/CObserver.h:
 
