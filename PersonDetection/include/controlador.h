@@ -46,7 +46,7 @@ class Controlador: public ArASyncTask
 {
 
 public:
-    enum accion{DETECTAR, IR, SEGUIR, VFF, GUARDARMEDIDAS, GUARDARCONTINUO};
+    enum accion{DETECTAR, IR, SEGUIR, VFF, GUARDARMEDIDAS, GUARDARCONTINUO,COUNT};
 private:
 
     // Fields
@@ -88,6 +88,8 @@ private:
     void guardarMedidas();
     void filtrarMedidas(vector<double> *dfiltrada, vector<CPose2D> *puntos);
     void navegar();
+    void monitorizarEntorno();
+    vector<Cluster> detectarPiernas();
 
 
 public:

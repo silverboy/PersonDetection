@@ -148,7 +148,7 @@ public:
     void start()
     {
 
-        driver->setAction(Controlador::VFF);
+        driver->setAction(Controlador::DETECTAR);
         driver->reanudar();
     }
 

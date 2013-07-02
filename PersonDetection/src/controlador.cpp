@@ -60,8 +60,8 @@ Controlador::Controlador(ArRobot *r, int a_inf, int a_sup, int b):
 	reacNavObj->loadConfigFile(iniNav,iniRob);
 	reacNavObj->initialize();
 
-	navParams.targetAllowedDistance=0.05f;
-	navParams.targetIsRelative=false;
+	navParams.targetAllowedDistance=0.2f;
+	navParams.targetIsRelative=true;
 
 	pthread_mutex_init(&nav_mutex,NULL);
 
@@ -137,7 +137,7 @@ void Controlador::mostrarVariaciones()
 
 bool Controlador::setAction(accion a)
 {
-    if(a>=0 && a<6)
+    if(a>=0 && a < Controlador::COUNT)
     {
         tarea=a;
         return true;
@@ -164,17 +164,60 @@ void* Controlador::runThread(void*)
             switch(tarea)
             {
 
-
-
             case Controlador::DETECTAR:
-//                this->measure(false);
-//                detector.obtenerEdges(distancias,medidas);
-//                detector.printEdges();
-//                //detector.detectarPersonas(currentPose);
-//                detector.detectarRobot(currentPose);
-//                detector.printPersonas();
-//                setAction(IR);
-            	ejecutar=false;
+            {
+
+            	temporizador.Tic();
+
+            	// Medir entorno y filtrar medidas
+            	monitorizarEntorno();
+
+            	// Obtener clusteres y determinar cuales son piernas
+            	vector<Cluster> piernas=detectarPiernas();
+
+
+            	vector<CPose2D> personas=detector.buscarPersonas(piernas);
+            	cout << "Personas detectadas: " << personas.size() << endl;
+
+            	cout << "Piernas detectadas: " << piernas.size() << endl;
+            	detector.printClusters(piernas);
+
+            	vector<double> x,y;
+            	x.clear();
+            	y.clear();
+            	for(int k=0;k < personas.size(); k++){
+            		x.push_back(personas[k].x());
+            		y.push_back(personas[k].y());
+            	}
+            	piernasPlot.plot(x,y,".c4");
+
+            	// Si hay personas detectadas nos dirigimos a la más cercana
+            	if(!personas.empty()){
+            		double t_x=personas[0].x();
+            		double t_y=personas[0].y();
+            		double dist=personas[0].norm();
+
+            		for(int i=1;i < personas.size(); i++){
+            			if(personas[i].norm() < dist){
+            				t_x=personas[i].x();
+            				t_y=personas[i].y();
+            				dist=personas[i].norm();
+            			}
+            		}
+
+            		cout << "Persona elegida ( " << t_x << " , " << t_y << " )" << endl;
+            		setTarget(t_x,t_y);
+
+            	}
+
+
+
+
+            	cout << "tiempo rutina (ms): " << temporizador.Tac()*1000 << endl;
+
+            	ArUtil::sleep(1000);
+            }
+
                 break;
 
             case Controlador::IR:
@@ -208,7 +251,6 @@ void* Controlador::runThread(void*)
 //                }
                 break;
             case Controlador::SEGUIR:
-
 
 
                /* timer.setToNow();
@@ -302,84 +344,19 @@ void* Controlador::runThread(void*)
             case Controlador::GUARDARMEDIDAS:
             {
             	temporizador.Tic();
-            	// Medimos con el laser estableciendo distancia maxima
-            	measure(false);
-            	vector<double> dfiltrada;
-            	vector<CPose2D> puntos;
-            	filtrarMedidas(&dfiltrada,&puntos);
 
-            	// Preparamos el detector para clusterizar
-            	detector.setDistancias(dfiltrada);
-            	detector.setPuntos(puntos);
+            	monitorizarEntorno();
 
-            	// Eliminamos lineas para facilitar la deteccion
-            	Eigen::MatrixXf rectas=detector.eliminarRectas(30,181);
+            	vector<Cluster> piernas=detectarPiernas();
 
-            	double limits[] = {0,2,-2,2};
-            	vector<double> limites (limits, limits + 4);
-
-            	cout << "Rectas detectadas: " << rectas.rows() << endl;
-
-            	// Dibujamos rectas detectadas
-            	for(int j=0;j < rectas.rows();j++){
-
-            		Grafico::dibujarLinea(&winPlot,rectas(j,0),rectas(j,1),limites);
-
-            	}
-
-            	// Clusterizar
-            	vector<Cluster> conjuntos=detector.clusterizar(0.10,3);
-            	vector<Cluster> piernas;
-            	vector<CPose2D> *p;
-            	vector<double> x,y;
-            	double target;
-
-            	string formato[3];
-            	formato[0]=".r2";
-            	formato[1]=".b2";
-            	formato[2]=".g2";
-
-            	clusterPlot.clear();
-            	piernasPlot.clear();
-
-
-
-            	for(int i=0;i < conjuntos.size();i++){
-            		p=conjuntos[i].getPuntos();
-            		for(int j=0;j < conjuntos[i].getNumPuntos();j++){
-            			x.push_back(p->at(j).x());
-            			y.push_back(p->at(j).y());
-            		}
-            		clusterPlot.plot(x,y,formato[i%3]);
-
-
-            		// Determinar si es pierna o no
-            		instancia[0].index=1;
-            		instancia[1].index=2;
-            		instancia[2].index=3;
-            		instancia[3].index=-1;
-
-            		instancia[0].value=conjuntos[i].getContorno();
-            		instancia[1].value=conjuntos[i].getAncho();
-            		instancia[2].value=conjuntos[i].getProfundidad();
-
-
-            		target=svm_predict(model,instancia);
-
-            		if(target==1){
-            			// El clasificador SVM lo reconoce como pierna
-            			piernas.push_back(conjuntos[i]);
-            			piernasPlot.plot(x,y,formato[i%3]);
-            		}
-            		x.clear();
-            		y.clear();
-            	}
 
             	vector<CPose2D> personas=detector.buscarPersonas(piernas);
             	cout << "Personas detectadas: " << personas.size() << endl;
 
             	cout << "Piernas detectadas: " << piernas.size() << endl;
             	detector.printClusters(piernas);
+
+            	vector<double> x,y;
             	x.clear();
             	y.clear();
             	for(int k=0;k < personas.size(); k++){
@@ -388,7 +365,7 @@ void* Controlador::runThread(void*)
             	}
             	piernasPlot.plot(x,y,".c4");
 
-            	cout << "tiempo rutin (ms): " << temporizador.Tac()*1000 << endl;
+            	cout << "tiempo rutina (ms): " << temporizador.Tac()*1000 << endl;
 
 
             	ejecutar=false;
@@ -491,6 +468,106 @@ void Controlador::navegar(){
 	}
 
 
+}
+
+/**
+ * Este método obtiene las medidas del láser, las filtra
+ * considerando la distancia máxima de detección (SAVE_MEASURE_MAX_DIST),
+ * introduce las distancias y puntos en detector y elimina rectas.
+ *
+ * También dibuja las rectas detectadas.
+ *
+ */
+
+void Controlador::monitorizarEntorno(){
+	// Medimos con el laser estableciendo distancia maxima
+	measure(false);
+	vector<double> dfiltrada;
+	vector<CPose2D> puntos;
+	filtrarMedidas(&dfiltrada,&puntos);
+
+	// Preparamos el detector para clusterizar
+	detector.setDistancias(dfiltrada);
+	detector.setPuntos(puntos);
+
+	// Eliminamos lineas para facilitar la deteccion
+	Eigen::MatrixXf rectas=detector.eliminarRectas(30,181);
+
+	double limits[] = {0,2,-2,2};
+	vector<double> limites (limits, limits + 4);
+
+	cout << "Rectas detectadas: " << rectas.rows() << endl;
+
+	// Dibujamos rectas detectadas
+	for(int j=0;j < rectas.rows();j++){
+
+		Grafico::dibujarLinea(&winPlot,rectas(j,0),rectas(j,1),limites);
+
+	}
+
+}
+
+/**
+ *
+ * Obtiene clusteres a partir de las medidas que contiene el detector
+ * y determina si son piernas o no usando el clasificador SVM.
+ * Dibuja los clusteres y piernas detectados (en ventanas distintas)
+ * y devuelve un vector con las piernas detectadas.
+ *
+ *
+ */
+
+vector<Cluster> Controlador::detectarPiernas(){
+
+	// Clusterizar
+	vector<Cluster> conjuntos=detector.clusterizar(0.10,3);
+	vector<Cluster> piernas;
+	vector<CPose2D> *p;
+	vector<double> x,y;
+	double target;
+
+	string formato[3];
+	formato[0]=".r2";
+	formato[1]=".b2";
+	formato[2]=".g2";
+
+	clusterPlot.clear();
+	piernasPlot.clear();
+
+
+
+	for(int i=0;i < conjuntos.size();i++){
+		p=conjuntos[i].getPuntos();
+		for(int j=0;j < conjuntos[i].getNumPuntos();j++){
+			x.push_back(p->at(j).x());
+			y.push_back(p->at(j).y());
+		}
+		clusterPlot.plot(x,y,formato[i%3]);
+
+
+		// Determinar si es pierna o no
+		instancia[0].index=1;
+		instancia[1].index=2;
+		instancia[2].index=3;
+		instancia[3].index=-1;
+
+		instancia[0].value=conjuntos[i].getContorno();
+		instancia[1].value=conjuntos[i].getAncho();
+		instancia[2].value=conjuntos[i].getProfundidad();
+
+
+		target=svm_predict(model,instancia);
+
+		if(target==1){
+			// El clasificador SVM lo reconoce como pierna
+			piernas.push_back(conjuntos[i]);
+			piernasPlot.plot(x,y,formato[i%3]);
+		}
+		x.clear();
+		y.clear();
+	}
+
+	return piernas;
 }
 
 void Controlador::setDataIndex(int d){
