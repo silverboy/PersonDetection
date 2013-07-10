@@ -84,12 +84,12 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="mrpt-maps"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="mrpt-obs"/>
 									<listOptionValue builtIn="false" value="mrpt-base"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="mrpt-gui"/>
+									<listOptionValue builtIn="false" value="mrpt-opengl"/>
 									<listOptionValue builtIn="false" value="mrpt-reactivenav"/>
 									<listOptionValue builtIn="false" value="mrpt-graphs"/>
 									<listOptionValue builtIn="false" value="mrpt-maps"/>
 									<listOptionValue builtIn="false" value="mrpt-obs"/>
-									<listOptionValue builtIn="false" value="mrpt-opengl"/>
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="mrpt-gui"/>
 									<listOptionValue builtIn="false" value="Aria"/>
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="BaseArnl"/>
