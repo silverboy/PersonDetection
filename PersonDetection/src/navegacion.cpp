@@ -25,6 +25,7 @@ class ControlHandler
     	cout << " flecha izq / drch : girar" << endl;
     	cout << " p   : start" << endl;
     	cout << " s   : stop" << endl;
+    	cout << " t   : test parado" << endl;
     	cout << " g   : guardar Medidas" << endl;
     	cout << " c   : guardar Medidas continuamente" << endl;
     	cout << " x   : Quit" << endl;
@@ -122,6 +123,7 @@ public:
 
     		case 'x':
     			//Aria::shutdown();
+    			driver->stopRunning();
     			robot->stopRunning();
     			break;
 
@@ -135,6 +137,10 @@ public:
 
     		case 'g':
     			guardar();
+    			break;
+
+    		case 't':
+    			testParado();
     			break;
 
     		case 's':
@@ -168,6 +174,11 @@ public:
     }
     void guardarContinuo(){
     	driver->setAction(Controlador::GUARDARCONTINUO);
+    	driver->reanudar();
+    }
+
+    void testParado(){
+    	driver->setAction(Controlador::TEST_PARADO);
     	driver->reanudar();
     }
 

@@ -41,6 +41,9 @@ Controlador::Controlador(ArRobot *r, int a_inf, int a_sup, int b):
 	max_save_dist=config.read_double("MEASURE_CONFIG","SAVE_MEASURE_MAX_DISTANCE",10,false);
 	detector=Detector(max_save_dist);
 
+	delay=config.read_int("TEST","DELAY",100,false);
+
+
 	// Cargar SVM
 	model=svm_load_model("svm_model");
 	instancia=malloc(4*sizeof(struct svm_node));
@@ -150,9 +153,18 @@ bool Controlador::setAction(accion a)
 
 void* Controlador::runThread(void*)
 {
-    double angle;
+    double angle,time_ms;
+    bool test=false;
+    int indice(0);
     clock_t inicio,fin;
     CTicTac temporizador;
+    CTicTac t_global;
+    t_global.Tic();
+
+    FILE* sonar, *individuos;
+
+
+
     // Run until the thread is requested to end by another thread.
     while(getRunning())
     {
@@ -211,8 +223,6 @@ void* Controlador::runThread(void*)
             	}
 
 
-
-
             	cout << "tiempo rutina (ms): " << temporizador.Tac()*1000 << endl;
 
             	ArUtil::sleep(1000);
@@ -221,91 +231,11 @@ void* Controlador::runThread(void*)
                 break;
 
             case Controlador::IR:
-                /*ArLog::log(ArLog::Normal ,"Entra en ir\n");
 
-                if(!detector.seleccionarPersona(&goalPose,currentPose))
-                {
-                    setAction(DETECTAR);
-                    break;
-                }
-                else{
-                	this->goToGoal(false);
-
-                }
-                setAction(DETECTAR);
-*/                // Si he conseguido seleccionar la persona objetivo
-                // voy hacia ella
-//                if(this->goToGoal(true))
-//                {
-//                    setAction(SEGUIR);
-//                	//setAction(DETECTAR);
-//                    this->measure(false);
-//                    espia.actualizarMedidas(distancias,medidas);
-//                    ArLog::log(ArLog::Normal,"Modo seguimiento...");
-//                    //ejecutar=false;
-//                }
-//                else
-//                {
-//                    setAction(DETECTAR);
-//
-//                }
-                break;
+            	break;
             case Controlador::SEGUIR:
 
 
-               /* timer.setToNow();
-                inicio=clock();
-
-                // Codigo original
-                this->measure(false);
-                espia.calcularVariaciones(distancias,medidas);
-                //espia.printVariaciones(medidas);*/
-
-//                this->measure(false);
-//                espia.actualizarMedidas(distancias, medidas);
-//                ArUtil::sleep(100);
-//                this->measure(false);
-//                espia.calcularVariaciones(distancias, medidas);
-//                //espia.printVariaciones(medidas);
-
-//                if(espia.calcularVariacionGlobalPerception(medidas,currentPose.findAngleTo(goalPose),goalPose))
-//                {
-//                    angle=espia.getGoalAngle();
-//                    //printMedidas();
-//                    espia.printVariaciones(medidas,goalPose);
-//                    goalPose=puntoMedio(goalPose, buscarPose(angle));
-//                    currentPose.log();
-//
-//
-//                    espia.printGlobalPerception();
-//                    sprintf(logBuffer, "Angulo: %f\t GoalPose: ",angle);
-//                    ArLog::log(ArLog::Normal ,logBuffer);
-//                    goalPose.log();
-//
-//                    robot->setHeading(angle);
-//                    goToGoal(false);
-//                    espia.actualizarMedidas(distancias,medidas);
-//                    fin=clock();
-//
-//
-//                    sprintf(logBuffer, "Tiempo rutina: %f\n",(double)(fin-inicio)/CLOCKS_PER_SEC);
-//                    ArLog::log(ArLog::Normal ,logBuffer);
-//                }
-//                else{
-//                	espia.printVariaciones(medidas,goalPose);
-//                	ArLog::log(ArLog::Normal ,"\n");
-//
-//                }
-//
-//                //espia.calcularVariaciones(distancias,medidas);
-//                //espia.printVariaciones(medidas);
-//
-//                while(timer.mSecSince() < 200 )
-//                {
-//                    ArUtil::sleep(50);
-//                }
-
-                //ejecutar=false;
                 break;
 
             case Controlador::VFF:
@@ -341,6 +271,76 @@ void* Controlador::runThread(void*)
 
             	break;
 
+            case Controlador::TEST_PARADO:
+            {
+
+            	if(!test){
+
+            		ostringstream stream1,stream2;
+
+            		stream1 << "sonar" << indice << ".dat";
+            		stream2 << "personas" << indice << ".dat";
+
+            		sonar=ArUtil::fopen(stream1.str().data(),"wb");
+            		individuos=ArUtil::fopen(stream2.str().data(),"wb");
+
+            		test=true;
+            	}
+
+            	temporizador.Tic();
+
+            	monitorizarEntorno();
+            	time_ms=t_global.Tac()*1000;
+
+
+            	robot->enableSonar();
+            	fprintf(sonar,"t:%f",time_ms);
+
+            	for(int i=0;i<24;i++){
+
+            		fprintf(sonar,",%d",robot->getSonarRange(i));
+
+            	}
+            	fprintf(sonar,"\n");
+
+            	robot->disableSonar();
+
+
+
+            	vector<Cluster> piernas=detectarPiernas();
+
+            	vector<CPose2D> personas=detector.buscarPersonas(piernas);
+            	cout << "Personas detectadas: " << personas.size() << endl;
+
+            	cout << "Piernas detectadas: " << piernas.size() << endl;
+            	//detector.printClusters(piernas);
+
+            	vector<double> x,y;
+            	x.clear();
+            	y.clear();
+            	for(int k=0;k < personas.size(); k++){
+            		x.push_back(personas[k].x());
+            		y.push_back(personas[k].y());
+            	}
+            	piernasPlot.plot(x,y,".c4");
+
+            	// Almacenar Personas
+            	if(!personas.empty()){
+            		fprintf(individuos,"t:%f,x:%0.3f,y:%0.3f\n",time_ms,personas[0].x(),personas[0].y());
+            	}
+
+
+            	// Almacenar datos laser
+            	guardarMedidas();
+            	//ejecutar=false;
+
+            	cout << "tiempo rutina (ms): " << temporizador.Tac()*1000 << endl;
+
+
+            }
+            	break;
+
+
             case Controlador::GUARDARMEDIDAS:
             {
             	temporizador.Tic();
@@ -348,7 +348,6 @@ void* Controlador::runThread(void*)
             	monitorizarEntorno();
 
             	vector<Cluster> piernas=detectarPiernas();
-
 
             	vector<CPose2D> personas=detector.buscarPersonas(piernas);
             	cout << "Personas detectadas: " << personas.size() << endl;
@@ -416,10 +415,25 @@ void* Controlador::runThread(void*)
             }
             //ejecutar=false;
         }
-        ArUtil::sleep(100);
+
+        if(!ejecutar && test){
+
+        	fclose(sonar);
+        	fclose(individuos);
+        	cout << "Guardados archivos sonar(i).dat y personas(i).dat i:" << indice-1 << endl;
+
+        	indice++;
+        	test=false;
+        }
+
+
+
+        ArUtil::sleep(delay);
     }
+
+
     ArLog::log(ArLog::Normal, "Example thread: requested stop running, ending thread.");
-    return NULL;
+    //return NULL;
 }
 
 bool Controlador::estaEjecutando(){

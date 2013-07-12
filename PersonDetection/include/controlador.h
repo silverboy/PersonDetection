@@ -46,7 +46,7 @@ class Controlador: public ArASyncTask
 {
 
 public:
-    enum accion{DETECTAR, IR, SEGUIR, VFF, GUARDARMEDIDAS, GUARDARCONTINUO,COUNT};
+    enum accion{DETECTAR, IR, SEGUIR, VFF,TEST_PARADO,TEST_MOVIL, GUARDARMEDIDAS, GUARDARCONTINUO,COUNT};
 private:
 
     // Fields
@@ -73,7 +73,7 @@ private:
 
     bool ejecutar;
     accion tarea;
-    int data_index;
+    int data_index,delay;
     char logBuffer[150];
 
 
