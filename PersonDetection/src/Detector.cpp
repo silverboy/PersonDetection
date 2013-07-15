@@ -337,8 +337,8 @@ vector<CPose2D> Detector::buscarPersonas(vector<Cluster> piernas){
 			}
 		}
 
-		return personas;
 	}
+	return personas;
 
 }
 
