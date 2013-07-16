@@ -154,14 +154,14 @@ bool Controlador::setAction(accion a)
 void* Controlador::runThread(void*)
 {
     double angle,time_ms;
-    bool test=false;
-    int indice(0);
+    bool test(false),camino(false);
+    int test_i(0),camino_i(0);
     clock_t inicio,fin;
     CTicTac temporizador;
     CTicTac t_global;
     t_global.Tic();
 
-    FILE* sonar, *individuos;
+    FILE* sonar, *individuos,*trayectoria;
 
 
 
@@ -278,8 +278,8 @@ void* Controlador::runThread(void*)
 
             		ostringstream stream1,stream2;
 
-            		stream1 << "sonar" << indice << ".dat";
-            		stream2 << "personas" << indice << ".dat";
+            		stream1 << "sonar" << test_i << ".dat";
+            		stream2 << "personas" << test_i << ".dat";
 
             		sonar=ArUtil::fopen(stream1.str().data(),"wb");
             		individuos=ArUtil::fopen(stream2.str().data(),"wb");
@@ -339,6 +339,72 @@ void* Controlador::runThread(void*)
 
             }
             	break;
+
+            case Controlador::TRAYECTORIA:
+            {
+
+            	if(!camino){
+
+            		ostringstream stream1;
+
+            		stream1 << "trayectoria" << camino_i << ".dat";
+
+            		trayectoria=ArUtil::fopen(stream1.str().data(),"wb");
+
+            		camino=true;
+            	}
+
+            	monitorizarEntorno();
+
+            	vector<Cluster> piernas=detectarPiernas();
+
+            	vector<CPose2D> personas=detector.buscarPersonas(piernas);
+
+            	cout << "Piernas detectadas: " << piernas.size() << endl;
+            	cout << "Personas detectadas: " << personas.size() << endl;
+
+
+            	vector<double> x,y;
+            	x.clear();
+            	y.clear();
+            	for(int k=0;k < personas.size(); k++){
+            		x.push_back(personas[k].x());
+            		y.push_back(personas[k].y());
+            	}
+            	piernasPlot.plot(x,y,".c4");
+
+            	// Deshabilitar key handler
+            	ArSyncTask* sensorInterp=robot->findTask("Sensor Interp");
+            	ArSyncTask* keyH=sensorInterp->find("ManualKeyHandler");
+            	keyH->setState(ArTaskState::SUSPEND);
+
+            	// Pedir confirmacion para guardar el perfil
+            	cout << "¿Almacenar posicion ([s]/n)?";
+            	char c = mrpt::system::os::getch();
+            	cout << endl;
+            	if(c != 'n'){
+            		// Almacenar Personas
+            		if(!personas.empty()){
+            			fprintf(individuos,"x:%0.3f,y:%0.3f\n",personas[0].x(),personas[0].y());
+            		}
+            	}
+
+            	// Preguntar si tomar siguiente medida o finalziar camino
+            	cout << "Presione f para finalizar camino o cualquier otra tecla para una nueva adquisicion: ";
+            	char c = mrpt::system::os::getch();
+            	cout << endl;
+            	if(c == 'f'){
+            		// Finalizar bucle
+            		ejecutar=false;
+            	}
+
+            	// Habilitar key Handler
+            	keyH->setState(ArTaskState::RESUME);
+
+
+            }
+            break;
+
 
 
             case Controlador::GUARDARMEDIDAS:
@@ -420,12 +486,22 @@ void* Controlador::runThread(void*)
 
         	fclose(sonar);
         	fclose(individuos);
-        	cout << "Guardados archivos sonar(i).dat y personas(i).dat i:" << indice-1 << endl;
+        	cout << "Guardados archivos sonar(i).dat y personas(i).dat i:" << test_i << endl;
 
-        	indice++;
+        	test_i++;
         	test=false;
         }
 
+
+        if(!ejecutar && camino){
+
+        	fclose(trayectoria);
+
+        	cout << "Trayectoria guardada en trayectoria" << camino_i << ".dat" << endl;
+
+        	camino++;
+        	camino=false;
+        }
 
 
         ArUtil::sleep(delay);

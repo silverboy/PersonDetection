@@ -26,6 +26,7 @@ class ControlHandler
     	cout << " p   : start" << endl;
     	cout << " s   : stop" << endl;
     	cout << " t   : test parado" << endl;
+    	cout << " w   : guardar trayectoria" << endl;
     	cout << " g   : guardar Medidas" << endl;
     	cout << " c   : guardar Medidas continuamente" << endl;
     	cout << " x   : Quit" << endl;
@@ -139,6 +140,11 @@ public:
     			guardar();
     			break;
 
+
+    		case 'w':
+    			guardarTrayectoria();
+    			break;
+
     		case 't':
     			testParado();
     			break;
@@ -179,6 +185,11 @@ public:
 
     void testParado(){
     	driver->setAction(Controlador::TEST_PARADO);
+    	driver->reanudar();
+    }
+
+    void guardarTrayectoria(){
+    	driver->setAction(Controlador::TRAYECTORIA);
     	driver->reanudar();
     }
 
