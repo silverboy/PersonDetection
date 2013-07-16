@@ -318,7 +318,7 @@ vector<CPose2D> Detector::buscarPersonas(vector<Cluster> piernas){
 	vector<CPose2D> personas;
 
 	// Iteramos en el vector Cluster
-	for(int i=0; i < piernas.size()-1 ; i++){
+	for(int i=0; i < (signed int)piernas.size()-1 ; i++){
 		// Seleccionado el primer elemento busco otro que se encuentre a una distancia razonable
 		for(int j=i+1;j < piernas.size();j++){
 
