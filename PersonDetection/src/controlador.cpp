@@ -385,13 +385,13 @@ void* Controlador::runThread(void*)
             	if(c != 'n'){
             		// Almacenar Personas
             		if(!personas.empty()){
-            			fprintf(individuos,"x:%0.3f,y:%0.3f\n",personas[0].x(),personas[0].y());
+            			fprintf(trayectoria,"x:%0.3f,y:%0.3f\n",personas[0].x(),personas[0].y());
             		}
             	}
 
             	// Preguntar si tomar siguiente medida o finalziar camino
             	cout << "Presione f para finalizar camino o cualquier otra tecla para una nueva adquisicion: ";
-            	char c = mrpt::system::os::getch();
+            	c = mrpt::system::os::getch();
             	cout << endl;
             	if(c == 'f'){
             		// Finalizar bucle
@@ -499,7 +499,7 @@ void* Controlador::runThread(void*)
 
         	cout << "Trayectoria guardada en trayectoria" << camino_i << ".dat" << endl;
 
-        	camino++;
+        	camino_i++;
         	camino=false;
         }
 
